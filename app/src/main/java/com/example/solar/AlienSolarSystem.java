@@ -88,6 +88,29 @@ public class AlienSolarSystem extends View {
             }
         }
 
+        Rect areaNave;
+        boolean colisionNave;
+        int intentosNave = 0;
+        do {
+            colisionNave = false;
+            int xNave = random.nextInt(getWidth() - naveImagen.getWidth());
+            int yNave = random.nextInt(getHeight() - naveImagen.getHeight());
+            areaNave = new Rect(xNave, yNave, xNave + naveImagen.getWidth(), yNave + naveImagen.getHeight());
+
+            for (Rect r : ocupado) {
+                if (Rect.intersects(r, areaNave)) {
+                    colisionNave = true;
+                    break;
+                }
+            }
+            intentosNave++;
+        } while (colisionNave && intentosNave < MAX_INTENTOS);
+
+        if (!colisionNave) {
+            naveX = areaNave.left;
+            naveY = areaNave.top;
+        }
+
     }
 
     private void cargarPlanetas() {
