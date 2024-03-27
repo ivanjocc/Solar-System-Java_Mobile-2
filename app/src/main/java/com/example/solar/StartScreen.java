@@ -27,11 +27,9 @@ public class StartScreen extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawBitmap(startPageLogo, (getWidth() - startPageLogo.getWidth()) / 2, getHeight() / 4, null);
-        if (playBtnState) {
-            canvas.drawBitmap(btnStartDown, (getWidth() - btnStartDown.getWidth()) / 2, (getHeight() * 3) / 4, null);
-        } else {
-            canvas.drawBitmap(btnStartUp, (getWidth() - btnStartUp.getWidth()) / 2, (getHeight() * 3) / 4, null);
-        }
+
+        Bitmap btnImage = playBtnState ? btnStartDown : btnStartUp;
+        canvas.drawBitmap(btnImage, (getWidth() - btnImage.getWidth()) / 2, (getHeight() * 3) / 4, null);
     }
 
     @Override
@@ -62,7 +60,6 @@ public class StartScreen extends View {
                 }
                 break;
         }
-
         return true;
     }
 }
