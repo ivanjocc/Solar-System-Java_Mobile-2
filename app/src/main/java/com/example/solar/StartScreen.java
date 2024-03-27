@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -12,6 +13,7 @@ public class StartScreen extends View {
     private Bitmap startPageLogo;
     private Bitmap btnStartUp;
     private Bitmap btnStartDown;
+    private Bitmap imagenFondo;
     private boolean playBtnState = false;
     private Context mContext;
 
@@ -21,13 +23,18 @@ public class StartScreen extends View {
         startPageLogo = BitmapFactory.decodeResource(getResources(), R.drawable.start_page_logo);
         btnStartUp = BitmapFactory.decodeResource(getResources(), R.drawable.btn_start_up);
         btnStartDown = BitmapFactory.decodeResource(getResources(), R.drawable.btn_start_down);
+        imagenFondo = BitmapFactory.decodeResource(getResources(), R.drawable.fondo);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawBitmap(startPageLogo, (getWidth() - startPageLogo.getWidth()) / 2, getHeight() / 4, null);
 
+        if (imagenFondo != null) {
+            canvas.drawBitmap(imagenFondo, null, new Rect(0, 0, getWidth(), getHeight()), null);
+        }
+
+        canvas.drawBitmap(startPageLogo, (getWidth() - startPageLogo.getWidth()) / 2, getHeight() / 4, null);
         Bitmap btnImage = playBtnState ? btnStartDown : btnStartUp;
         canvas.drawBitmap(btnImage, (getWidth() - btnImage.getWidth()) / 2, (getHeight() * 3) / 4, null);
     }

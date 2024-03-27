@@ -17,6 +17,7 @@ public class AlienSolarSystem extends View {
     private List<Bitmap> imagenesPlanetas;
     private Random random = new Random();
     private Bitmap naveImagen;
+    private Bitmap imagenFondo;
     private float naveX = 100;
     private float naveY = 200;
 
@@ -45,14 +46,14 @@ public class AlienSolarSystem extends View {
         }
     }
 
-
     private void init() {
         planetas = new ArrayList<>();
         imagenesPlanetas = new ArrayList<>();
         cargarPlanetas();
         naveImagen = BitmapFactory.decodeResource(getResources(), R.drawable.nave);
-
+        imagenFondo = BitmapFactory.decodeResource(getResources(), R.drawable.fondo); // Cargar la imagen de fondo
     }
+
 
     private void colocarObjetosAleatoriamente() {
         final int MAX_INTENTOS = 100;
@@ -110,7 +111,6 @@ public class AlienSolarSystem extends View {
         }
     }
 
-
 //    private void cargarImagenesPlanetas() {
 //        for (AstreCeleste planeta : planetas) {
 //            int resourceId = getResources().getIdentifier(planeta.getImageName(), "drawable", getContext().getPackageName());
@@ -122,6 +122,11 @@ public class AlienSolarSystem extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        if (imagenFondo != null) {
+            canvas.drawBitmap(imagenFondo, null, new Rect(0, 0, getWidth(), getHeight()), null);
+        }
+
         for (int i = 0; i < planetas.size(); i++) {
             AstreCeleste planeta = planetas.get(i);
             Bitmap imagenPlaneta = imagenesPlanetas.get(i);
@@ -134,6 +139,7 @@ public class AlienSolarSystem extends View {
             canvas.drawBitmap(naveImagen, naveX, naveY, null);
         }
     }
+
 
     public void setNaveX(float x) {
         float limiteIzquierdo = 0;
