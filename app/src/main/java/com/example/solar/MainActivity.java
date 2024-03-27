@@ -1,10 +1,10 @@
 package com.example.solar;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,7 +13,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // verificar primera vez que se ejecuta la aplicacion
+        initializeDatabaseIfNeeded();
+
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(MainActivity.this, GameActivity.class);
+            startActivity(intent);
+            finish();
+        }, 2000);
+    }
+
+    private void initializeDatabaseIfNeeded() {
         SharedPreferences prefs = getSharedPreferences("com.example.solar.prefs", MODE_PRIVATE);
         boolean isFirstRun = prefs.getBoolean("isFirstRun", true);
 
@@ -38,6 +47,5 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.insertPlanet("Uranus", 100, "LightBlue", 1, "uranus");
         dbHelper.insertPlanet("Neptune", 100, "Blue", 1, "neptune");
         dbHelper.insertPlanet("Pluto", 30, "Brown", 0, "pluto");
-
     }
 }
