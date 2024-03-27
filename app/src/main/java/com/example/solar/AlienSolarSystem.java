@@ -93,9 +93,15 @@ public class AlienSolarSystem extends View {
         planetas.clear();
         imagenesPlanetas.clear();
 
-        planetas.add(new AstreCeleste(1, "Jupiter", 50, "#AAAAAA", 0, "jupiter", 100, 200));
-        planetas.add(new AstreCeleste(2, "Marte", 70, "#FFFF00", 0, "marte", 300, 400));
-        planetas.add(new AstreCeleste(3, "Neptuno", 80, "#0000FF", 1, "neptuno", 500, 600));
+        planetas.add(new AstreCeleste(1, "Mercurio", 40, "#9e9e9e", 0, "mercurio", 100, 100));
+        planetas.add(new AstreCeleste(2, "Venus", 60, "#e1c699", 0, "venus", 200, 200));
+        planetas.add(new AstreCeleste(3, "Tierra", 70, "#6da7d9", 1, "tierra", 300, 300));
+        planetas.add(new AstreCeleste(4, "Marte", 50, "#ff5733", 0, "marte", 400, 400));
+        planetas.add(new AstreCeleste(5, "Júpiter", 140, "#c79b63", 0, "jupiter", 500, 500));
+        planetas.add(new AstreCeleste(6, "Saturno", 120, "#ead9a4", 0, "saturno", 600, 600));
+        planetas.add(new AstreCeleste(7, "Urano", 100, "#a4e4eb", 0, "urano", 700, 700));
+        planetas.add(new AstreCeleste(8, "Neptuno", 100, "#4973a6", 1, "neptuno", 800, 800));
+        planetas.add(new AstreCeleste(9, "Plutón", 30, "#d3c1d0", 0, "pluton", 900, 900));
 
         for (AstreCeleste planeta : planetas) {
             int resourceId = getResources().getIdentifier(planeta.getImageName(), "drawable", getContext().getPackageName());
