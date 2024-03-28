@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.LightingColorFilter;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
@@ -51,7 +53,7 @@ public class AlienSolarSystem extends View {
         imagenesPlanetas = new ArrayList<>();
         cargarPlanetas();
         naveImagen = BitmapFactory.decodeResource(getResources(), R.drawable.nave);
-        imagenFondo = BitmapFactory.decodeResource(getResources(), R.drawable.fondo); // Cargar la imagen de fondo
+        imagenFondo = BitmapFactory.decodeResource(getResources(), R.drawable.fondo);
     }
 
 
@@ -150,18 +152,34 @@ public class AlienSolarSystem extends View {
             canvas.drawBitmap(imagenFondo, null, new Rect(0, 0, getWidth(), getHeight()), null);
         }
 
-        for (int i = 0; i < planetas.size(); i++) {
-            AstreCeleste planeta = planetas.get(i);
-            Bitmap imagenPlaneta = imagenesPlanetas.get(i);
-            if (imagenPlaneta != null) {
-                canvas.drawBitmap(imagenPlaneta, planeta.getX() - (imagenPlaneta.getWidth() / 2), planeta.getY() - (imagenPlaneta.getHeight() / 2), null);
+        Rect naveRect = new Rect((int)naveX, (int)naveY, (int)(naveX + naveImagen.getWidth()), (int)(naveY + naveImagen.getHeight()));
+
+        Paint paint = new Paint();
+
+        for (AstreCeleste planeta : planetas) {
+            Bitmap imagenPlaneta = imagenesPlanetas.get(planetas.indexOf(planeta));
+
+            int x = (int)planeta.getX() - (imagenPlaneta.getWidth() / 2);
+            int y = (int)planeta.getY() - (imagenPlaneta.getHeight() / 2);
+
+            Rect planetaRect = new Rect(x, y, x + imagenPlaneta.getWidth(), y + imagenPlaneta.getHeight());
+
+            if (Rect.intersects(naveRect, planetaRect) && !planeta.isTocado()) {
+                planeta.setTocado(true);
             }
+
+            if (planeta.isTocado()) {
+                paint.setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0xFFCCCCCC));
+            } else {
+                paint.setColorFilter(null);
+            }
+
+            canvas.drawBitmap(imagenPlaneta, x, y, paint);
         }
 
-        if (naveImagen != null) {
-            canvas.drawBitmap(naveImagen, naveX, naveY, null);
-        }
+        canvas.drawBitmap(naveImagen, naveX, naveY, null);
     }
+
 
 
     public void setNaveX(float x) {
