@@ -9,8 +9,6 @@ public class AstreCeleste {
     private String imageName;
     private int x;
     private int y;
-    private boolean tocado = false;
-
     public AstreCeleste() {
     }
 
@@ -89,11 +87,4 @@ public class AstreCeleste {
         this.y = y;
     }
 
-    public boolean isTocado() {
-        return tocado;
-    }
-
-    public void setTocado(boolean tocado) {
-        this.tocado = tocado;
-    }
 }

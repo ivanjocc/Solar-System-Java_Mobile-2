@@ -152,35 +152,33 @@ public class AlienSolarSystem extends View {
             canvas.drawBitmap(imagenFondo, null, new Rect(0, 0, getWidth(), getHeight()), null);
         }
 
+        Paint paint = new Paint();
         Rect naveRect = new Rect((int)naveX, (int)naveY, (int)(naveX + naveImagen.getWidth()), (int)(naveY + naveImagen.getHeight()));
 
-        Paint paint = new Paint();
-
-        for (AstreCeleste planeta : planetas) {
-            Bitmap imagenPlaneta = imagenesPlanetas.get(planetas.indexOf(planeta));
-
+        for (int i = 0; i < planetas.size(); i++) {
+            AstreCeleste planeta = planetas.get(i);
+            Bitmap imagenPlaneta = imagenesPlanetas.get(i);
             int x = (int)planeta.getX() - (imagenPlaneta.getWidth() / 2);
             int y = (int)planeta.getY() - (imagenPlaneta.getHeight() / 2);
 
             Rect planetaRect = new Rect(x, y, x + imagenPlaneta.getWidth(), y + imagenPlaneta.getHeight());
 
-            if (Rect.intersects(naveRect, planetaRect) && !planeta.isTocado()) {
-                planeta.setTocado(true);
-            }
-
-            if (planeta.isTocado()) {
-                paint.setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0xFFCCCCCC));
+            if (Rect.intersects(naveRect, planetaRect)) {
+                paint.setColorFilter(new LightingColorFilter(0xFF7F7F7F, 0x00000000));
             } else {
                 paint.setColorFilter(null);
             }
 
-            canvas.drawBitmap(imagenPlaneta, x, y, paint);
+            if (imagenPlaneta != null) {
+                canvas.drawBitmap(imagenPlaneta, x, y, paint);
+            }
         }
 
-        canvas.drawBitmap(naveImagen, naveX, naveY, null);
+        // Dibuja la nave
+        if (naveImagen != null) {
+            canvas.drawBitmap(naveImagen, naveX, naveY, null);
+        }
     }
-
-
 
     public void setNaveX(float x) {
         float limiteIzquierdo = 0;
